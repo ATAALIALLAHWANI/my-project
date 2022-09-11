@@ -1,0 +1,8 @@
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\bin\Debug\ConsoleApp5.exe.config
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\bin\Debug\ConsoleApp5.exe
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\bin\Debug\ConsoleApp5.pdb
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\obj\Debug\ConsoleApp5.csproj.AssemblyReference.cache
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\obj\Debug\ConsoleApp5.csproj.SuggestedBindingRedirects.cache
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\obj\Debug\ConsoleApp5.csproj.CoreCompileInputs.cache
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\obj\Debug\ConsoleApp5.exe
+D:\programs\Windows form\ConsoleApp5\ConsoleApp5\obj\Debug\ConsoleApp5.pdb
