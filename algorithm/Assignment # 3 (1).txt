@@ -1,0 +1,312 @@
+#include<iostream>
+using namespace std;
+void heapify(long arr[],int n,int i)
+{
+int l=2*i+1;
+int r=2*i+2;
+int max=i;
+if(l<n&&arr[l]>arr[max])
+max=l;
+if(r<n&&arr[r]>arr[max])
+max=r;
+
+if(max != i){
+swap(arr[i],arr[max]);
+heapify(arr,n,max);
+}
+}
+
+void buildHeap(long arr[],int n)
+{
+	for (int i = n / 2 - 1; i >= 0; i--)
+		heapify(arr, n, i);
+}
+
+void heapSort(long arr[], long n)
+{
+
+	buildHeap(arr, n);
+	for (int i = n-1; i >=0; i--)
+	{
+		swap(arr[0], arr[i]);
+		heapify(arr, i, 0);
+	}
+
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+
+void merge(long arr[], long l, long m, long r){
+	long i, j, k;
+	long n1 = m - l + 1;                  
+	long n2 = r - m;                    
+	long *L=new long[n1], *R=new long[n2];
+	
+	for (i = 0; i < n1; i++)
+		L[i] = arr[l + i];
+	for (j = 0; j < n2; j++)
+		R[j] = arr[m + 1 + j];
+
+	i = j = 0; 
+	k = l;
+
+	while (i < n1 && j < n2)
+	{
+		if (L[i] <= R[j])
+		{
+			arr[k] = L[i];
+			i++;
+		}
+		else
+		{
+			arr[k] = R[j];
+			j++;
+		}
+		k++;
+	}
+
+	while (i < n1)
+	{
+		arr[k] = L[i];
+		i++;
+		k++;
+	}
+
+	while (j < n2)
+	{
+		arr[k] = R[j];
+		j++;
+		k++;
+	}
+}
+
+
+void mergeSort(long arr[], long l, long r)
+{
+	if (l < r)
+	{
+		long m = l + (r - l) / 2;
+        
+		mergeSort(arr, l, m);
+		mergeSort(arr, m + 1, r);
+
+		merge(arr, l, m, r);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+void merge(long gArray[], int low, int mid1,
+		int mid2, int high, long destArray[],int mid3)
+{
+	int i = low, j = mid1, k = mid2,f=mid3, l = low;
+
+	// choose smaller of the smallest in the three ranges
+	while ((i < mid1) && (j < mid2) && (k < high) && (f < mid3))
+	{
+		if(gArray[i] < gArray[j])
+		{
+			if(gArray[i] < gArray[k])
+			{
+				destArray[l++] = gArray[i++];
+			}
+			else
+			{
+				destArray[l++] = gArray[k++];
+			}
+		}
+		else
+		{
+			if(gArray[j] < gArray[k])
+			{
+				destArray[l++] = gArray[j++];
+			}
+			else
+			{
+				destArray[l++] = gArray[k++];
+			}
+		}
+	}
+
+	// case where first and second ranges
+	// have remaining values
+	while ((i < mid1) && (j < mid2)&&(f < mid3))
+	{
+		if(gArray[i] < gArray[j])
+		{
+			destArray[l++] = gArray[i++];
+		}
+		else
+		{
+			destArray[l++] = gArray[j++];
+		}
+	}
+
+	
+		while ((f < mid3) && (k < high))
+	{
+		if(gArray[i] < gArray[k])
+		{
+			destArray[l++] = gArray[i++];
+		}
+		else
+		{
+			destArray[l++] = gArray[k++];
+		}
+	}
+	while ((j < mid2) && (k < high))
+	{
+		if(gArray[j] < gArray[k])
+		{
+			destArray[l++] = gArray[j++];
+		}
+		else
+		{
+			destArray[l++] = gArray[k++];
+		}
+	}
+
+	
+	while ((i < mid1) && (k < high))
+	{
+		if(gArray[i] < gArray[k])
+		{
+			destArray[l++] = gArray[i++];
+		}
+		else
+		{
+			destArray[l++] = gArray[k++];
+		}
+	}
+	
+		while (k < high)
+		destArray[l++] = gArray[k++];
+
+
+
+	// copy remaining values from the first range
+	while (i < mid1)
+		destArray[l++] = gArray[i++];
+
+	// copy remaining values from the second range
+	while (j < mid2)
+		destArray[l++] = gArray[j++];
+
+	// copy remaining values from the third range
+	while (f < mid3)
+		destArray[l++] = gArray[j++];
+	// copy remaining values from the third range
+}
+
+
+void mergeSort3WayRec(long gArray[], int low,
+					int high, long destArray[])
+{
+	// If array size is 1 then do nothing
+	if (high - low < 2)
+		return;
+
+	// Splitting array into 3 parts
+	int mid1 = low + ((high - low) / 4);
+	int mid2 = low + 2 * ((high - low) / 4) + 1;
+	int mid3 = low + 4 * ((high - low) / 4) + 2;
+
+	// Sorting 3 arrays recursively
+	mergeSort3WayRec(destArray, low, mid1, gArray);
+	mergeSort3WayRec(destArray, mid1, mid2, gArray);
+	mergeSort3WayRec(destArray, mid2, high, gArray);
+	mergeSort3WayRec(destArray, mid3, high, gArray);
+
+	// Merging the sorted arrays
+	merge(destArray, low, mid1, mid2, high, gArray,mid3);
+}
+
+void Ternary_Merge(long gArray[], long n)
+{
+	// if array size is zero return null
+	if (n == 0)
+		return;
+
+	// creating duplicate of given array
+	long fArray[n];
+
+	// copying alements of given array into
+	// duplicate array
+	for (int i = 0; i < n; i++)
+		fArray[i] = gArray[i];
+
+	// sort function
+	mergeSort3WayRec(fArray, 0, n, gArray);
+
+	// copy back elements of duplicate array
+	// to given array
+	for (int i = 0; i < n; i++)
+		gArray[i] = fArray[i];
+}
+int main()
+{
+        
+    long int n ;
+    cout <<"Entere value n..."<<endl;
+    cin>>n;
+    int it = 0;
+  
+    double tim1[10], tim2[10], tim3[10];
+  
+    printf("A_size,  Ternary_Merge , mergeSort, heapSort \n");
+  
+    while (it++ < 10) {
+        long int a[n], b[n], c[n];
+  
+        for (int i = 0; i < n; i++) {
+            long int no = rand() % n + 1;
+            a[i] = no;
+            b[i] = no;
+            c[i] = no;
+        }
+         
+        clock_t start, end;
+  
+        //  Ternary_Merge sort
+        start = clock();
+       Ternary_Merge (a,n);
+        end = clock();
+  
+        tim1[it] = ((double)(end - start));
+  
+        // mergeSort sort
+        start = clock();
+        mergeSort(b,0, n-1);
+        end = clock();
+  
+        tim2[it] = ((double)(end - start));
+  
+        // heapSort
+        start = clock();
+       heapSort(c, n);
+        end = clock();
+  
+        tim3[it] = ((double)(end - start));
+  
+        //////////////////////////////////////
+       
+        printf("%li, %li,     %li,      %li\n",
+               n,
+               (long int)tim1[it],
+               (long int)tim2[it],
+               (long int)tim3[it]);
+  
+        // 
+        n += 1;
+    }
+        
+	return 0;
+
+	}
